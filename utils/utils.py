@@ -22,3 +22,11 @@ def send_email(payload, useremail, subject):
 def cep_with_mask(cep):
     masked_cep = re.sub(r'^(\d{5})-?(\d{3})$', r'\1-\2', cep)
     return masked_cep
+
+def cpf_with_mask(cpf):
+    cpf_regex = re.compile(r'(\d{3})(\d{3})(\d{3})(\d{2})')
+    return cpf_regex.sub(r'\1.\2.\3-\4', cpf)
+
+def cnpj_with_mask(cnpj):
+    cnpj_regex = re.compile(r'(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})')
+    return cnpj_regex.sub(r'\1.\2.\3/\4-\5', cnpj)

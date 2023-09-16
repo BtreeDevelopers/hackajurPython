@@ -8,7 +8,7 @@ router = Blueprint('document', __name__, url_prefix='/document')
 def teste():
     return {"message": "hello world!!"}
 
-@router.route("/gear-confissao-de-divida", methods=["POST"])
+@router.route("/gerar-propostas", methods=["POST"])
 def change_password_router():
     try:
         data = request.json
