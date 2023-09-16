@@ -1,4 +1,4 @@
-def return_debt_notice_template(nome, valor, nome_divida):
+def return_download_doc_template(nome, link):
     return """
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -8,7 +8,7 @@ def return_debt_notice_template(nome, valor, nome_divida):
           <meta name="x-apple-disable-message-reformatting">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
           <meta content="telephone=no" name="format-detection">
-          <title>New message</title><!--[if (mso 16)]>
+          <title>Copy of Copy of New message</title><!--[if (mso 16)]>
             <style type="text/css">
             a {text-decoration: none;}
             </style>
@@ -68,7 +68,7 @@ def return_debt_notice_template(nome, valor, nome_divida):
                           <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:560px">
                            <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                              <tr>
-                              <td align="center" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><img src="https://zzbxxe.stripocdn.email/content/guids/CABINET_7db0861c3313beae8e1de6191d573963d50d1d1612a75eee7749e1ae17dbf46b/images/frame_7.png" alt="Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;font-size:12px" width="100" title="Logo"></td>
+                              <td align="center" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><img src="https://zzbxxe.stripocdn.email/content/guids/CABINET_0c9e1633bb136d657c892167dbec84f6c14c20eab1b0460e56a16da59050c394/images/frame_7.png" alt="Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;font-size:12px" width="100" title="Logo"></td>
                              </tr>
                            </table></td>
                          </tr>
@@ -88,70 +88,13 @@ def return_debt_notice_template(nome, valor, nome_divida):
                           <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                            <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                              <tr>
-                              <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;font-size:0px"><img src="https://zzbxxe.stripocdn.email/content/guids/CABINET_7db0861c3313beae8e1de6191d573963d50d1d1612a75eee7749e1ae17dbf46b/images/imagem1svg.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" height="238"></td>
+                              <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;font-size:0px"><img src="https://zzbxxe.stripocdn.email/content/guids/CABINET_0c9e1633bb136d657c892167dbec84f6c14c20eab1b0460e56a16da59050c394/images/imagem5svg.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" height="238"></td>
                              </tr>
                              <tr>
-                              <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px"><h1 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#333333">Prezado(a) """ +nome+""",</h1></td>
+                              <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px"><h1 style="Margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:bold;color:#333333">Prezado(a) """+nome+""",</h1></td>
                              </tr>
                              <tr>
-                              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><br></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">Esperamos que esta mensagem o encontre bem. Estamos entrando em contato para informá-lo sobre uma dívida ativa em seu nome relacionada à sua conta Algar.</p></td>
-                             </tr>
-                           </table></td>
-                         </tr>
-                       </table></td>
-                     </tr>
-                     <tr>
-                      <td class="esdev-adapt-off" align="left" style="padding:20px;Margin:0">
-                       <table cellpadding="0" cellspacing="0" class="esdev-mso-table" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:560px">
-                         <tr>
-                          <td class="esdev-mso-td" valign="top" style="padding:0;Margin:0">
-                           <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                             <tr class="es-mobile-hidden">
-                              <td align="left" style="padding:0;Margin:0;width:146px">
-                               <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                 <tr>
-                                  <td align="center" height="40" style="padding:0;Margin:0"></td>
-                                 </tr>
-                               </table></td>
-                             </tr>
-                           </table></td>
-                          <td class="esdev-mso-td" valign="top" style="padding:0;Margin:0">
-                           <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                             <tr>
-                              <td align="left" style="padding:0;Margin:0;width:121px">
-                               <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#055550" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#055550;border-radius:10px 0px 0px 10px" role="presentation">
-                                 <tr>
-                                  <td align="right" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#fef7f7;font-size:14px">Valor da Dívida:</p></td>
-                                 </tr>
-                                 <tr>
-                                  <td align="right" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#ffffff;font-size:14px">Produto:</p></td>
-                                 </tr>
-                               </table></td>
-                             </tr>
-                           </table></td>
-                          <td class="esdev-mso-td" valign="top" style="padding:0;Margin:0">
-                           <table cellpadding="0" cellspacing="0" class="es-left" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                             <tr>
-                              <td align="left" style="padding:0;Margin:0;width:155px">
-                               <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#055550" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;background-color:#055550;border-radius:0px 10px 10px 0px" role="presentation">
-                                 <tr>
-                                  <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-left:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#ffffff;font-size:14px"><strong>"""+valor+"""</strong></p></td>
-                                 </tr>
-                                 <tr>
-                                  <td align="left" style="padding:0;Margin:0;padding-bottom:10px;padding-left:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#ffffff;font-size:14px"><strong>"""+nome_divida+"""</strong></p></td>
-                                 </tr>
-                               </table></td>
-                             </tr>
-                           </table></td>
-                          <td class="esdev-mso-td" valign="top" style="padding:0;Margin:0">
-                           <table cellpadding="0" cellspacing="0" class="es-right" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
-                             <tr class="es-mobile-hidden">
-                              <td align="left" style="padding:0;Margin:0;width:138px">
-                               <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                 <tr>
-                                  <td align="center" height="40" style="padding:0;Margin:0"></td>
-                                 </tr>
-                               </table></td>
+                              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">Estamos muito satisfeitos em informar que o contrato que você assinou recentemente está pronto para ser baixado e arquivado em sua conveniência.</p></td>
                              </tr>
                            </table></td>
                          </tr>
@@ -164,16 +107,16 @@ def return_debt_notice_template(nome, valor, nome_divida):
                           <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                            <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;border-radius:5px" role="presentation">
                              <tr>
-                              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">Entendemos que as circunstâncias podem mudar, e estamos comprometidos em ajudá-lo a resolver essa situação de maneira justa e acessível. Para facilitar esse processo, desenvolvemos um sistema online que permite que você negocie sua dívida de acordo com suas possibilidades financeiras.</p></td>
+                              <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><!--[if mso]><a href='"""+link+"""' target="_blank" hidden>
+            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href='"""+link+"""' 
+                        style="height:44px; v-text-anchor:middle; width:379px" arcsize="14%" stroke="f"  fillcolor="#ffcc00">
+                <w:anchorlock></w:anchorlock>
+                <center style='color:#1b7e6c; font-family:arial, "helvetica neue", helvetica, sans-serif; font-size:18px; font-weight:400; line-height:18px;  mso-text-raise:1px'>Clique aqui para baixar o contrato</center>
+            </v:roundrect></a>
+        <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#ffcc00;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-hide:all"><a href='"""+link+"""' class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#1b7e6c;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffcc00;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;padding-left:30px;padding-right:30px">Clique aqui para baixar o contrato</a></span><!--<![endif]--></td>
                              </tr>
                              <tr>
-                              <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><!--[if mso]><a href="https://hackajuralgar.web.app/" target="_blank" hidden>
-            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://hackajuralgar.web.app/" 
-                        style="height:44px; v-text-anchor:middle; width:378px" arcsize="14%" stroke="f"  fillcolor="#ffcc00">
-                <w:anchorlock></w:anchorlock>
-                <center style='color:#1b7e6c; font-family:arial, "helvetica neue", helvetica, sans-serif; font-size:18px; font-weight:400; line-height:18px;  mso-text-raise:1px'>Acesse o Sistema de Negociação</center>
-            </v:roundrect></a>
-        <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-style:solid;border-color:#2CB543;background:#ffcc00;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-hide:all"><a href="https://hackajuralgar.web.app/" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#1b7e6c;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffcc00;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;padding-left:30px;padding-right:30px">Acesse o Sistema de Negociação</a></span><!--<![endif]--></td>
+                              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong></strong>Após clicar no link, você será direcionado para uma página onde poderá visualizar e baixar o contrato em formato PDF. Certifique-se de salvar uma cópia em um local seguro para sua referência futura.</p></td>
                              </tr>
                            </table></td>
                          </tr>

@@ -1,3 +1,4 @@
+import locale
 import re
 import smtplib
 import email.message
@@ -30,3 +31,7 @@ def cpf_with_mask(cpf):
 def cnpj_with_mask(cnpj):
     cnpj_regex = re.compile(r'(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})')
     return cnpj_regex.sub(r'\1.\2.\3/\4-\5', cnpj)
+
+def formatted_number_value(valor):
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    return locale.currency(valor, grouping=True)
