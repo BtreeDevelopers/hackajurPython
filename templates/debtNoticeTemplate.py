@@ -68,7 +68,7 @@ def return_debt_notice_template(nome, valor, nome_divida):
                           <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:560px">
                            <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                              <tr>
-                              <td align="center" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><img src="https://zzbxxe.stripocdn.email/content/guids/CABINET_7db0861c3313beae8e1de6191d573963d50d1d1612a75eee7749e1ae17dbf46b/images/frame_7.png" alt="Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;font-size:12px" width="100" title="Logo"></td>
+                              <td align="center" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><img src="https://firebasestorage.googleapis.com/v0/b/hackajuralgar.appspot.com/o/quitaconta.png?alt=media&token=88808ad9-01ea-40f1-9ecc-eee4b5018a22" alt="Logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;font-size:12px" width="100" title="Logo"></td>
                              </tr>
                            </table></td>
                          </tr>
