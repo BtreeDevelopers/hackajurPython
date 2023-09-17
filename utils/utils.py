@@ -41,3 +41,13 @@ def calcula_valor_descontado(valor, desconto):
 
 def calculate_valor_parcela(valor, qtd_parcela):
     return valor/qtd_parcela
+
+def return_str_pessoa(pessoa, is_pf):
+    if(is_pf):
+        return f"""
+            <b>DEVEDOR PF</b>: {pessoa.nome}, {pessoa.nacionalidade}, {pessoa.estado_civil}, portador do CPF nº {pessoa.cpf}, residente e domiciliado no endereço {pessoa.endereco}.
+        """
+    else:
+        return f"""
+            <b>DEVEDOR PJ</b>: {pessoa.nome}, pessoa jurídica de direito {pessoa.pj}, inscrita no {pessoa.cnpj}, representada pela sócio administrador {pessoa.nome_administrador}, {pessoa.nacionalidade_administrador}, {pessoa.estado_civil_administrador}, portador do CPF nº {pessoa.cpf_administrador} , residente e domiciliado no endereço {pessoa.endereco}.
+        """

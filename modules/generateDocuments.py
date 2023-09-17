@@ -9,6 +9,7 @@ from utils.utils import cep_with_mask, cpf_with_mask, cnpj_with_mask, calcula_va
 from io import BytesIO
 from templates.debtConfessionTemplate import return_debt_confession_document
 from templates.propostaFiadorTemplate import return_proposta_fiador_template
+from templates.propostaParcelaSemGarantiaTemplate import return_parcelamento_sem_garantia
 from google.cloud import storage
 import requests
 import traceback
@@ -56,7 +57,7 @@ def generate_proposal_1(documento):
 
 def generate_proposta_fiador(url_list, documento, dadosPagamento, pessoa, fiador, is_pf):
     try:
-        pdf_file = f"proposta1_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
+        pdf_file = f"proposta_fiador_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
         doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
@@ -85,14 +86,15 @@ def generate_proposta_fiador(url_list, documento, dadosPagamento, pessoa, fiador
         print(err_msg)
         raise e
 
-def generate_proposal_3(documento):
+def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, fiador, is_pf):
     try:
-        doc = SimpleDocTemplate(documento.pdf_file, pagesize=letter)
+        pdf_file = f"proposta_sem_parcela_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
+        pdf_file = pdf_file.replace(" ", "")
+        doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
 
-        document = return_debt_confession_document(documento.nome, documento.nacionalidade, documento.endereco, documento.estado_civil, documento.cpf, documento.numero_formatado,
-                                                   documento.por_extenso, documento.data_assinatura_formatada)
+        document = return_parcelamento_sem_garantia(documento, dadosPagamento, pessoa, fiador, is_pf)
 
         for paragraph in document.split('\n'):
             p = Paragraph(paragraph.replace('<b>', '<font name="Helvetica-Bold">').replace('</b>', '</font>'),
@@ -100,12 +102,16 @@ def generate_proposal_3(documento):
             story.append(p)
             story.append(Spacer(1, 6))
 
-        imagem = Image(documento.imagem_io, width=150, height=100)
-        imagem.hAlign = 'LEFT'
-
-        story.append(imagem)
+        # imagem = Image(documento.imagem_io, width=150, height=100)
+        # imagem.hAlign = 'LEFT'
+        #
+        # story.append(imagem)
 
         doc.build(story)
+
+        url_list.append(save_doc_bucket(pdf_file))
+
+        return url_list
     except Exception as e:
         err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
         print(err_msg)
@@ -321,6 +327,7 @@ def generate_doc(data):
         cpf = data["cpf"]
         pessoaFisica = PessoaFisica(nome, nacionalidade, estado_civil, cpf, endereco)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
+        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -331,5 +338,6 @@ def generate_doc(data):
         estado_civil_administrador = data["estado_civil_administrador"]
         pessoaJuridica = PessoaJuridica(nome_empresa, pj, cnpj, endereco, cpf_administrador, nome_administrador, nacionalidade_administrador, estado_civil_administrador)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
+        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
 
     return url_list
