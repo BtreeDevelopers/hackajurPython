@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 import traceback
-from modules.send_message import debt_notice, automatic_login, download_doc
+from modules.send_message import debt_notice, automatic_login, download_doc, pendencia_contrato
 
 router = Blueprint('send_email', __name__, url_prefix='/enviar-email')
 
@@ -45,6 +45,20 @@ def download_documento():
         email = data["email"]
         link = data["link"]
         download_doc(nome, email, link)
+        return {'error': 'false', 'message': 'E-mail enviado com sucesso', 'status': 200}
+    except Exception as e:
+        err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
+        print(err_msg)
+        raise e
+
+@router.route("/pendencia_contrato", methods=["POST"])
+def pendencia_contrato_enviar():
+    try:
+        data = request.json
+        nome = data["nome"]
+        email = data["email"]
+        link = data["link"]
+        pendencia_contrato(nome, email, link)
         return {'error': 'false', 'message': 'E-mail enviado com sucesso', 'status': 200}
     except Exception as e:
         err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
