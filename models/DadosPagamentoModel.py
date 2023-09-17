@@ -1,5 +1,6 @@
 class DadosPagamento:
-    def __init__(self, valor_formatado,  valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela_formatado):
+    def __init__(self, valor, valor_formatado,  valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela_formatado):
+        self.valor = valor
         self.valor_formatado = valor_formatado
         self.valor_formatado_por_extenso = valor_formatado_por_extenso
         self.valor_formatado_descontado = valor_formatado_descontado

@@ -372,7 +372,7 @@ def generate_doc(data):
     valor_caucao_extenso = numero_por_extenso(valor_caucao)
 
     documento = DocumentoPropostaFiador(data_assinatura_formatada, data_assinatura_contrato, imagem_io="null")
-    dadosPagamento = DadosPagamento(valor_formatado, valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela)
+    dadosPagamento = DadosPagamento(valor, valor_formatado, valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela)
     fiador = PessoaFisica("NOME DO FIADOR", "NACIONALIDADE DO FIADOR", "ESTADO CIVIL FIADOR", "CPF DO FIADOR", "ENDEREÇO DO FIADOR")
     if(is_pf):
         nome = data["nome"]
@@ -380,14 +380,40 @@ def generate_doc(data):
         estado_civil = data["estado_civil"]
         cpf = data["cpf"]
         pessoaFisica = PessoaFisica(nome, nacionalidade, estado_civil, cpf, endereco)
-        url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
-        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
-        url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaFisica, chave_pix, is_pf)
-        url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaFisica, numero_cartao_credito, is_pf)
-        url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
-        url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica, numero_cartao_debito, is_pf)
-        url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaFisica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
-        url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
+        if(valor > 10000):
+            url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                        numero_cartao_credito, is_pf)
+            url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaFisica, chave_pix, is_pf)
+            url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
+            url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                      numero_cartao_debito, is_pf)
+
+            url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaFisica,
+                                               valor_caucao_formatado, valor_caucao_extenso, is_pf)
+            url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
+            url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
+            return url_list
+        elif (valor <= 800):
+            url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                        numero_cartao_credito, is_pf)
+            url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaFisica, chave_pix, is_pf)
+            url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
+            url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                      numero_cartao_debito, is_pf)
+            url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
+            return url_list
+        elif(valor <= 10000):
+            url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaFisica,
+                                               valor_caucao_formatado, valor_caucao_extenso, is_pf)
+            url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
+            url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                        numero_cartao_credito, is_pf)
+            url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaFisica, chave_pix, is_pf)
+            url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
+            url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica,
+                                                      numero_cartao_debito, is_pf)
+            return url_list
+
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -397,14 +423,27 @@ def generate_doc(data):
         nacionalidade_administrador = data["nacionalidade_administrador"]
         estado_civil_administrador = data["estado_civil_administrador"]
         pessoaJuridica = PessoaJuridica(nome_empresa, pj, cnpj, endereco, cpf_administrador, nome_administrador, nacionalidade_administrador, estado_civil_administrador)
-        url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
-        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
-        url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaJuridica, chave_pix, is_pf)
-        url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaJuridica, numero_cartao_credito, is_pf)
-        url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaJuridica, numero_boleto, is_pf)
-        url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaJuridica, numero_cartao_debito,
-                                                  is_pf)
-        url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaJuridica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
-        url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
+        if (valor > 10000):
+            url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaJuridica,
+                                                        numero_cartao_credito, is_pf)
+            url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaJuridica, chave_pix, is_pf)
+            url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaJuridica, numero_boleto, is_pf)
+            url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaJuridica,
+                                                      numero_cartao_debito, is_pf)
 
-    return url_list
+            url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaJuridica,
+                                               valor_caucao_formatado, valor_caucao_extenso, is_pf)
+            url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
+            url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
+            return url_list
+        elif (valor <= 10000):
+            url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaJuridica,
+                                               valor_caucao_formatado, valor_caucao_extenso, is_pf)
+            url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
+            url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaJuridica,
+                                                        numero_cartao_credito, is_pf)
+            url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaJuridica, chave_pix, is_pf)
+            url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaJuridica, numero_boleto, is_pf)
+            url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaJuridica,
+                                                      numero_cartao_debito, is_pf)
+            return url_list
