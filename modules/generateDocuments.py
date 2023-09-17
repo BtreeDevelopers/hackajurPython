@@ -29,6 +29,7 @@ def generate_proposal_1(documento):
     try:
         pdf_file = f"proposta1_{documento.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
+        pdf_file = pdf_file.replace(":", "")
         doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
@@ -59,6 +60,7 @@ def generate_proposta_fiador(url_list, documento, dadosPagamento, pessoa, fiador
     try:
         pdf_file = f"proposta_fiador_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
+        pdf_file = pdf_file.replace(":", "")
         doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
@@ -90,6 +92,7 @@ def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, i
     try:
         pdf_file = f"proposta_sem_parcela_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
+        pdf_file = pdf_file.replace(":", "")
         doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
