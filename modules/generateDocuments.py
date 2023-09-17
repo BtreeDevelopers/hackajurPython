@@ -9,8 +9,9 @@ import base64
 from templates.propostaBoletoTemplate import return_boleto_template
 from templates.propostaCartaoDeCreditoTemplate import return_propsta_cartao_credito_template
 from templates.propstaCartaoDebito import return_propsta_debito
+from templates.propstaCaucaoTemplate import return_template_caucao
 from utils.utils import cep_with_mask, cpf_with_mask, cnpj_with_mask, calcula_valor_descontado, calculate_valor_parcela, \
-    gerar_chave_pix_aleatoria, gerar_numero_boleto_aleatorio
+    gerar_chave_pix_aleatoria, gerar_numero_boleto_aleatorio, gerar_valor_caucao
 from io import BytesIO
 from templates.debtConfessionTemplate import return_debt_confession_document
 from templates.propostaFiadorTemplate import return_proposta_fiador_template
@@ -255,14 +256,16 @@ def generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoa, 
         print(err_msg)
         raise e
 
-def generate_proposal_8(documento):
+def generate_propsta_caucao(url_list, documento, dadosPagamento, pessoa, valor_caucao_formatado, valor_caucao_extenso, is_pf):
     try:
-        doc = SimpleDocTemplate(documento.pdf_file, pagesize=letter)
+        pdf_file = f"proposta_cartao_caucao_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
+        pdf_file = pdf_file.replace(" ", "")
+        pdf_file = pdf_file.replace(":", "")
+        doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
 
-        document = return_debt_confession_document(documento.nome, documento.nacionalidade, documento.endereco, documento.estado_civil, documento.cpf, documento.numero_formatado,
-                                                   documento.por_extenso, documento.data_assinatura_formatada)
+        document = return_template_caucao(documento, dadosPagamento, pessoa, valor_caucao_formatado, valor_caucao_extenso, is_pf)
 
         for paragraph in document.split('\n'):
             p = Paragraph(paragraph.replace('<b>', '<font name="Helvetica-Bold">').replace('</b>', '</font>'),
@@ -270,12 +273,16 @@ def generate_proposal_8(documento):
             story.append(p)
             story.append(Spacer(1, 6))
 
-        imagem = Image(documento.imagem_io, width=150, height=100)
-        imagem.hAlign = 'LEFT'
-
-        story.append(imagem)
+        # imagem = Image(documento.imagem_io, width=150, height=100)
+        # imagem.hAlign = 'LEFT'
+        #
+        # story.append(imagem)
 
         doc.build(story)
+
+        url_list.append(save_doc_bucket(pdf_file))
+
+        return url_list
     except Exception as e:
         err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
         print(err_msg)
@@ -358,6 +365,10 @@ def generate_doc(data):
 
     numero_cartao_debito = data["numero_cartao_credito"]
 
+    valor_caucao = gerar_valor_caucao(valor)
+    valor_caucao_formatado = locale.currency(valor_caucao, grouping=True)
+    valor_caucao_extenso = numero_por_extenso(valor_caucao)
+
     documento = DocumentoPropostaFiador(data_assinatura_formatada, data_assinatura_contrato, imagem_io="null")
     dadosPagamento = DadosPagamento(valor_formatado, valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela)
     fiador = PessoaFisica("NOME DO FIADOR", "NACIONALIDADE DO FIADOR", "ESTADO CIVIL FIADOR", "CPF DO FIADOR", "ENDEREÇO DO FIADOR")
@@ -373,6 +384,7 @@ def generate_doc(data):
         url_list = generate_proposta_cartao_credito(url_list, documento, dadosPagamento, pessoaFisica, numero_cartao_credito, is_pf)
         url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
         url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica, numero_cartao_debito, is_pf)
+        url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaFisica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -389,5 +401,6 @@ def generate_doc(data):
         url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaJuridica, numero_boleto, is_pf)
         url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaJuridica, numero_cartao_debito,
                                                   is_pf)
+        url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaJuridica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
 
     return url_list

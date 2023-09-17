@@ -62,3 +62,7 @@ def gerar_chave_pix_aleatoria(tamanho=20):
 def gerar_numero_boleto_aleatorio():
     numero_boleto = ''.join(str(random.randint(0, 9)) for _ in range(47))
     return numero_boleto
+
+def gerar_valor_caucao(valor):
+    return valor - ((valor*30)/100)
+    return valor
