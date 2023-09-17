@@ -10,6 +10,7 @@ from templates.propostaBoletoTemplate import return_boleto_template
 from templates.propostaCartaoDeCreditoTemplate import return_propsta_cartao_credito_template
 from templates.propstaCartaoDebito import return_propsta_debito
 from templates.propstaCaucaoTemplate import return_template_caucao
+from templates.propstaGarantiaRealTemplate import return_garantia_real
 from utils.utils import cep_with_mask, cpf_with_mask, cnpj_with_mask, calcula_valor_descontado, calculate_valor_parcela, \
     gerar_chave_pix_aleatoria, gerar_numero_boleto_aleatorio, gerar_valor_caucao
 from io import BytesIO
@@ -32,17 +33,16 @@ meses = [
     "Setembro", "Outubro", "Novembro", "Dezembro"
 ]
 
-def generate_proposal_1(documento):
+def generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoa, is_pf):
     try:
-        pdf_file = f"proposta1_{documento.nome}_{documento.data_assinatura_contrato}.pdf"
+        pdf_file = f"proposta_garantia_real_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
         pdf_file = pdf_file.replace(":", "")
         doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
 
-        document = return_debt_confession_document(documento.nome, documento.nacionalidade, documento.endereco, documento.estado_civil, documento.cpf, documento.numero_formatado,
-                                                   documento.por_extenso, documento.data_assinatura_formatada)
+        document = return_garantia_real(documento, dadosPagamento, pessoa, is_pf)
 
         for paragraph in document.split('\n'):
             p = Paragraph(paragraph.replace('<b>', '<font name="Helvetica-Bold">').replace('</b>', '</font>'),
@@ -50,14 +50,16 @@ def generate_proposal_1(documento):
             story.append(p)
             story.append(Spacer(1, 6))
 
-        imagem = Image(documento.imagem_io, width=150, height=100)
-        imagem.hAlign = 'LEFT'
-
-        story.append(imagem)
+        # imagem = Image(documento.imagem_io, width=150, height=100)
+        # imagem.hAlign = 'LEFT'
+        #
+        # story.append(imagem)
 
         doc.build(story)
 
-        save_doc_bucket(pdf_file)
+        url_list.append(save_doc_bucket(pdf_file))
+
+        return url_list
     except Exception as e:
         err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
         print(err_msg)
@@ -385,6 +387,7 @@ def generate_doc(data):
         url_list = generate_propsta_boleto(url_list, documento, dadosPagamento, pessoaFisica, numero_boleto, is_pf)
         url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaFisica, numero_cartao_debito, is_pf)
         url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaFisica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
+        url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -402,5 +405,6 @@ def generate_doc(data):
         url_list = generate_propsta_cartao_debito(url_list, documento, dadosPagamento, pessoaJuridica, numero_cartao_debito,
                                                   is_pf)
         url_list = generate_propsta_caucao(url_list, documento, dadosPagamento, pessoaJuridica, valor_caucao_formatado, valor_caucao_extenso, is_pf)
+        url_list = generate_propsta_garantia_real(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
 
     return url_list
