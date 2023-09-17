@@ -1,6 +1,6 @@
 from utils.utils import return_str_pessoa
 
-def return_parcelamento_sem_garantia(documento, dadosPagamento, pessoa, fiador, is_pf):
+def return_parcelamento_sem_garantia(documento, dadosPagamento, pessoa, is_pf):
     devedor = return_str_pessoa(pessoa, is_pf)
     return f"""
     <b>INSTRUMENTO PARTICULAR DE CONFISSÃO DE DÍVIDA E ACORDO</b>

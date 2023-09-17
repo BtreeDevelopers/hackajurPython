@@ -86,7 +86,7 @@ def generate_proposta_fiador(url_list, documento, dadosPagamento, pessoa, fiador
         print(err_msg)
         raise e
 
-def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, fiador, is_pf):
+def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, is_pf):
     try:
         pdf_file = f"proposta_sem_parcela_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
         pdf_file = pdf_file.replace(" ", "")
@@ -94,7 +94,7 @@ def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, f
         styles = getSampleStyleSheet()
         story = []
 
-        document = return_parcelamento_sem_garantia(documento, dadosPagamento, pessoa, fiador, is_pf)
+        document = return_parcelamento_sem_garantia(documento, dadosPagamento, pessoa, is_pf)
 
         for paragraph in document.split('\n'):
             p = Paragraph(paragraph.replace('<b>', '<font name="Helvetica-Bold">').replace('</b>', '</font>'),
@@ -327,7 +327,7 @@ def generate_doc(data):
         cpf = data["cpf"]
         pessoaFisica = PessoaFisica(nome, nacionalidade, estado_civil, cpf, endereco)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
-        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
+        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -338,6 +338,6 @@ def generate_doc(data):
         estado_civil_administrador = data["estado_civil_administrador"]
         pessoaJuridica = PessoaJuridica(nome_empresa, pj, cnpj, endereco, cpf_administrador, nome_administrador, nacionalidade_administrador, estado_civil_administrador)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
-        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
+        url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
 
     return url_list
