@@ -35,3 +35,9 @@ def cnpj_with_mask(cnpj):
 def formatted_number_value(valor):
     locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
     return locale.currency(valor, grouping=True)
+
+def calcula_valor_descontado(valor, desconto):
+    return valor - ((valor*desconto)/100)
+
+def calculate_valor_parcela(valor, qtd_parcela):
+    return valor/qtd_parcela
