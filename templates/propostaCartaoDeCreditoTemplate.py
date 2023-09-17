@@ -21,7 +21,7 @@ def return_propsta_cartao_credito_template(documento, dadosPagamento, pessoa, nu
     
     2.1 – Reconhecendo como boa a origem da dívida, o DEVEDOR, comprometem-se a pagar na seguinte conformidade:
     
-    2.1.1 – no valor de {dadosPagamento.valor_formatado_descontado} ({dadosPagamento.valor_descontado_por_extenso})   a serem pagos pelo DEVEDOR, através do cartão de crédito indicado parcelado em {dadosPagamento.qtd_de_parcela} vezes.
+    2.1.1 – no valor de {dadosPagamento.valor_formatado_descontado} ({dadosPagamento.valor_descontado_por_extenso}) a serem pagos pelo DEVEDOR, através do cartão de crédito indicado parcelado em {dadosPagamento.qtd_de_parcela} vezes.
     
     
     <b>CLÁUSULA TERCEIRA</b> – DA EXIGIBILIDADE DA DÍVIDA

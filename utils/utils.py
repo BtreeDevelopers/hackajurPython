@@ -58,3 +58,7 @@ def gerar_chave_pix_aleatoria(tamanho=20):
     caracteres = string.ascii_letters + string.digits  # letras maiúsculas, minúsculas e dígitos
     chave_pix = ''.join(random.choice(caracteres) for _ in range(tamanho))
     return chave_pix
+
+def gerar_numero_boleto_aleatorio():
+    numero_boleto = ''.join(str(random.randint(0, 9)) for _ in range(47))
+    return numero_boleto
