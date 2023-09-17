@@ -3,6 +3,8 @@ import re
 import smtplib
 import email.message
 import os
+import random
+import string
 
 def send_email(payload, useremail, subject):
 
@@ -51,3 +53,8 @@ def return_str_pessoa(pessoa, is_pf):
         return f"""
             <b>DEVEDOR PJ</b>: {pessoa.nome}, pessoa jurídica de direito {pessoa.pj}, inscrita no {pessoa.cnpj}, representada pela sócio administrador {pessoa.nome_administrador}, {pessoa.nacionalidade_administrador}, {pessoa.estado_civil_administrador}, portador do CPF nº {pessoa.cpf_administrador} , residente e domiciliado no endereço {pessoa.endereco}.
         """
+
+def gerar_chave_pix_aleatoria(tamanho=20):
+    caracteres = string.ascii_letters + string.digits  # letras maiúsculas, minúsculas e dígitos
+    chave_pix = ''.join(random.choice(caracteres) for _ in range(tamanho))
+    return chave_pix

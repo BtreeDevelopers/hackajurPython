@@ -5,11 +5,12 @@ from datetime import datetime
 from num2words import num2words
 import locale
 import base64
-from utils.utils import cep_with_mask, cpf_with_mask, cnpj_with_mask, calcula_valor_descontado, calculate_valor_parcela
+from utils.utils import cep_with_mask, cpf_with_mask, cnpj_with_mask, calcula_valor_descontado, calculate_valor_parcela, gerar_chave_pix_aleatoria
 from io import BytesIO
 from templates.debtConfessionTemplate import return_debt_confession_document
 from templates.propostaFiadorTemplate import return_proposta_fiador_template
 from templates.propostaParcelaSemGarantiaTemplate import return_parcelamento_sem_garantia
+from templates.propostaPixTemplate import return_pix_template
 from google.cloud import storage
 import requests
 import traceback
@@ -120,14 +121,16 @@ def generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoa, i
         print(err_msg)
         raise e
 
-def generate_proposal_4(documento):
+def generate_proposta_pix(url_list, documento, dadosPagamento, pessoa, chave_pix, is_pf):
     try:
-        doc = SimpleDocTemplate(documento.pdf_file, pagesize=letter)
+        pdf_file = f"proposta_sem_parcela_{pessoa.nome}_{documento.data_assinatura_contrato}.pdf"
+        pdf_file = pdf_file.replace(" ", "")
+        pdf_file = pdf_file.replace(":", "")
+        doc = SimpleDocTemplate(pdf_file, pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
 
-        document = return_debt_confession_document(documento.nome, documento.nacionalidade, documento.endereco, documento.estado_civil, documento.cpf, documento.numero_formatado,
-                                                   documento.por_extenso, documento.data_assinatura_formatada)
+        document = return_pix_template(documento, dadosPagamento, pessoa, chave_pix, is_pf)
 
         for paragraph in document.split('\n'):
             p = Paragraph(paragraph.replace('<b>', '<font name="Helvetica-Bold">').replace('</b>', '</font>'),
@@ -135,12 +138,16 @@ def generate_proposal_4(documento):
             story.append(p)
             story.append(Spacer(1, 6))
 
-        imagem = Image(documento.imagem_io, width=150, height=100)
-        imagem.hAlign = 'LEFT'
-
-        story.append(imagem)
+        # imagem = Image(documento.imagem_io, width=150, height=100)
+        # imagem.hAlign = 'LEFT'
+        #
+        # story.append(imagem)
 
         doc.build(story)
+
+        url_list.append(save_doc_bucket(pdf_file))
+
+        return url_list
     except Exception as e:
         err_msg = f'It was not possible to send the email. Cause: {traceback.format_exc()}'
         print(err_msg)
@@ -320,6 +327,8 @@ def generate_doc(data):
 
     # imagem_io = get_Image_from_bucket(url_bucket)
 
+    chave_pix = gerar_chave_pix_aleatoria()
+
     documento = DocumentoPropostaFiador(data_assinatura_formatada, data_assinatura_contrato, imagem_io="null")
     dadosPagamento = DadosPagamento(valor_formatado, valor_formatado_por_extenso, valor_formatado_descontado, valor_descontado_por_extenso, valor_desconto, qtd_de_parcela, valor_parcela)
     fiador = PessoaFisica("NOME DO FIADOR", "NACIONALIDADE DO FIADOR", "ESTADO CIVIL FIADOR", "CPF DO FIADOR", "ENDEREÇO DO FIADOR")
@@ -331,6 +340,7 @@ def generate_doc(data):
         pessoaFisica = PessoaFisica(nome, nacionalidade, estado_civil, cpf, endereco)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaFisica, fiador, is_pf)
         url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaFisica, is_pf)
+        url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaFisica, chave_pix, is_pf)
     else:
         nome_empresa = data["nome"]
         pj = data["pj"]
@@ -342,5 +352,6 @@ def generate_doc(data):
         pessoaJuridica = PessoaJuridica(nome_empresa, pj, cnpj, endereco, cpf_administrador, nome_administrador, nacionalidade_administrador, estado_civil_administrador)
         url_list = generate_proposta_fiador(url_list, documento, dadosPagamento, pessoaJuridica, fiador, is_pf)
         url_list = generate_proposta_sem_parcela(url_list, documento, dadosPagamento, pessoaJuridica, is_pf)
+        url_list = generate_proposta_pix(url_list, documento, dadosPagamento, pessoaJuridica, chave_pix, is_pf)
 
     return url_list
